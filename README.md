@@ -85,24 +85,23 @@ If it works, you will see a `test` folder with a `test-traced` set of files (`.s
 `vectorize_map.py` supports a few configuration options.
 
 ```
-$ ./vectorize_map.py --help
 usage: vectorize_map.py [-h] --gimp-path GIMP_PATH [--chunksize CHUNKSIZE]
                         [--image-processing-configuration-file VECTORIZE_CONFIG]
                         <input file or dir>
-
-NYPL Labs Map Vectorizer v0.2 by Mauricio Giraldo Arteaga @mgiraldo /
-@nypl_labs / Thomas Levine (https://thomaslevine.com)
-
-positional arguments:
-  <input file or dir>
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --gimp-path GIMP_PATH
-  --chunksize CHUNKSIZE
-                        how to split the mega polygon file
-  --image-processing-configuration-file VECTORIZE_CONFIG, -p VECTORIZE_CONFIG
 ```
+
+### Required argument
+
+`python vectorize_map.py <input file or dir>`
+
+You need to provide a path to a GeoTIFF file or a folder that contains multiple GeoTIFFs. If a `my_map.tiff` is provided, the vectorizer will create a subfolder next to it named `my_map/` where it will place the output of the process (**beware** of filenames with slashes!). If a `my_maps/` is provided, the vectorizer will produce **a subfolder for each** of the GeoTIFFs found inside as just described.
+
+### Optional arguments
+
+- `-h, --help`: to show a basic help message
+- `--gimp-path GIMP_PATH`: to provide the location of GIMP in your machine
+- `--chunksize CHUNKSIZE`: better to leave this alone but what it does is determine how big some of the temporary files will be
+- `--image-processing-configuration-file VECTORIZE_CONFIG, -p VECTORIZE_CONFIG`: this file is described in the next section, and the recommendation is to have a configuration file for each map or set of maps (e.g.: `ny_1850_atlas_config.txt`)
 
 ## Customizing The Vectorizer to your own maps
 
@@ -167,6 +166,7 @@ Usage: `python consolidator.py path/to/folder` (no trailing slash)
 
 ## Change log
 
+* 0.10: Refactored Python code and improved command-line parameters
 * 0.9: Vectorizer now produces centroids (`calculate_centroids.py` is less necessary now).
 * 0.8: Documented `consolidator.py`. Minor bug fixes.
 * 0.7: Calculating average color with PIL instead of ImageMagick. Removed ImageMagick dependency, added PIL as dependency.
